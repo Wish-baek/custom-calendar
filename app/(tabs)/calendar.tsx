@@ -15,6 +15,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
+// 캘린더 헤더에 보여질 요일 데이터
 const DAYS = [
   { label: "Sun", color: "#CA1B1B" },
   { label: "Mon", color: "#ABABAB" },
@@ -25,6 +26,7 @@ const DAYS = [
   { label: "Sat", color: "#04B6D9" },
 ];
 
+// 년도와 달을 파라미터로 받아 해당 달에 존재하는 날짜 데이터를 반환하는 함수
 const getDaysInMonth = (year: number, month: number) => {
   const startDay = new Date(year, month, 1).getDay();
   const lastDate = new Date(year, month + 1, 0).getDate();
@@ -34,6 +36,7 @@ const getDaysInMonth = (year: number, month: number) => {
     .concat(Array.from({ length: lastDate }, (_, i) => i + 1));
 };
 
+// 날짜를 파라미터로 받아 해당 날짜가 속한 주의 데이터를 반환하는 함수
 const getWeekForDate = (date: Date) => {
   const sunday = new Date(date);
   sunday.setDate(date.getDate() - sunday.getDay());
@@ -74,9 +77,11 @@ export default function CalendarWithGesture() {
   }, [calendarHeight, calendarMode, calendarOpacity, calendarScale]);
 
   const goToPrev = () => {
+    // 현재 보기 모드가 달이라면 이전 달로 변경
     if (calendarMode === "month") {
       setCurrentDate(new Date(year, month - 1, 1));
     } else {
+      // 현재 보기 모드가 주라면 이전 주로 변경
       const newDate = new Date(currentDate);
       newDate.setDate(currentDate.getDate() - 7);
       setCurrentDate(newDate);
@@ -84,9 +89,11 @@ export default function CalendarWithGesture() {
   };
 
   const goToNext = () => {
+    // 현재 보기 모드가 달이라면 다음 달로 변경
     if (calendarMode === "month") {
       setCurrentDate(new Date(year, month + 1, 1));
     } else {
+      // 현재 보기 모드가 주라면 다음 주로 변경
       const newDate = new Date(currentDate);
       newDate.setDate(currentDate.getDate() + 7);
       setCurrentDate(newDate);
@@ -94,13 +101,20 @@ export default function CalendarWithGesture() {
   };
 
   const gesture = Gesture.Pan().onEnd((e) => {
+    // 위로 스와이프 하면 보기 모드를 주로 변경
     if (e.translationY < -50) {
       runOnJS(setCalendarMode)("week");
-    } else if (e.translationY > 50) {
+    }
+    // 아래로 스와이프 하면 보기 모드를 달로 변경
+    else if (e.translationY > 50) {
       runOnJS(setCalendarMode)("month");
-    } else if (e.translationX < -50) {
+    }
+    // 왼쪽으로 스와이프 하면 다음 달/주로 변경
+    else if (e.translationX < -50) {
       runOnJS(goToNext)();
-    } else if (e.translationX > 50) {
+    }
+    // 오른쪽으로 스와이프 하면 이전 달/주로 변경
+    else if (e.translationX > 50) {
       runOnJS(goToPrev)();
     }
   });
