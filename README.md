@@ -1,50 +1,21 @@
-# Welcome to your Expo app 👋
+# 🗓️ 제스처 기반 캘린더 제작
+2025.07.01 ~ 2025.07.02
+<br/>
+### ⚒ 사용 기술
+- react-native
+- react-native-reanimated
+- react-native-gesture-handler
+<br/>
+  
+### ✨ 주요 기능 
+- React Native와 react-native-reanimated, react-native-gesture-handler를 활용하여 제스처를 기반으로 하는 <br/>커스텀 캘린더 컴포넌트를 제작하였습니다.
+- 스크린 상하 스와이프로 월간/주간 모드 전환, 좌우 스와이프로 월/주 이동이 가능하도록 구현했습니다.
+- 날짜를 터치했을 때 해당 날짜에 특정 스타일을 적용해 강조했습니다.
+<br/>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+### 💡 구현 중 어려웠던 점 & 해결 방법
+#### 📌 aspectRatio가 적용되지 않는 문제
+   #### calendarStyles.dayBox에 aspectRatio: 1을 적용했지만, 부모 요소의 높이가 지정되지 않아 비율이 유지되지 않는 현상이 발생했습니다.
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+#### 해결 방법
+- 부모 요소의 높이가 명확하게 지정되어있지 않아 자식 요소가 높이를 자동으로 계산할 수 없어 발생한 문제로,<br/>"height: 0"을 명시적으로 넣어 해결할 수 있었습니다.
